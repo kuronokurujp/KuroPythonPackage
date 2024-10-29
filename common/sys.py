@@ -1,5 +1,28 @@
 #!/usr/bin/env python
 import uuid
+import pathlib as Path
+
+
+def create_directory_by_datetime_jp_name(in_parent_path: Path) -> Path:
+    """
+    年月日時分秒の名前を付けたディレクトリを作成.
+    ディレクトリ名には日本語が入っている
+
+    Release Notes:
+        - 1.0.0 (2024-10-29): 新規作成.
+
+    @version: 1.0.0
+    """
+
+    from datetime import datetime
+
+    # 現在日付をフォルダ名として取得
+    directory_name = datetime.now().strftime("%Y年%m月%d日_%H時%M分%S秒")
+    directory_path = in_parent_path / directory_name
+    # ディレクトリ作成
+    directory_path.mkdir(exist_ok=True)
+
+    return directory_path
 
 
 def random_num() -> int:
