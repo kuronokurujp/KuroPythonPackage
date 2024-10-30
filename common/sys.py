@@ -10,17 +10,19 @@ def create_directory_by_datetime_jp_name(in_parent_path: Path) -> Path:
 
     Release Notes:
         - 1.0.0 (2024-10-29): 新規作成.
+        - 1.1.0 (2024-10-30): 親ディレクトリが存在しな場合は親ディレクトリ作成.
 
-    @version: 1.0.0
+    @version: 1.1.0
     """
 
     from datetime import datetime
 
     # 現在日付をフォルダ名として取得
     directory_name = datetime.now().strftime("%Y年%m月%d日_%H時%M分%S秒")
-    directory_path = in_parent_path / directory_name
+    directory_path: Path = in_parent_path / directory_name
     # ディレクトリ作成
-    directory_path.mkdir(exist_ok=True)
+    # ディレクトリがない場合は作成される
+    directory_path.mkdir(parents=True, exist_ok=True)
 
     return directory_path
 
