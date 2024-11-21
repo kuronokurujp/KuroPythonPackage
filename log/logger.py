@@ -140,7 +140,7 @@ class AppLogger(ILoegger):
         self.__logger.info(msg)
 
     def warn(self, msg: str):
-        self.__logger.warn(msg)
+        self.__logger.warning(msg)
 
     def err(self, msg: str):
         self.__logger.error(msg)

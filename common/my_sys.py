@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+import sys
 import uuid
-import pathlib as Path
+from pathlib import Path
+import inspect
 
 
 def create_directory_by_datetime_jp_name(in_parent_path: Path) -> Path:
@@ -90,3 +92,52 @@ def frange(start, end, step):
             result.append(val)
 
     return result
+
+
+def is_executable() -> bool:
+    """
+    PyInstallerなどで生成したexeで実行しているかどうか.
+
+    Release Notes:
+        - 1.0.0 (2024-11-21): 新規作成.
+
+    @version: 1.0.0
+    """
+    executable_path = Path(sys.executable).resolve()
+    if executable_path.suffix == ".exe":
+        if executable_path.name != "python.exe":
+            return True
+
+    return False
+
+
+def get_root_dir() -> Path:
+    """
+    スクリプト実行しているルートディレクトリパスを取得
+
+    Release Notes:
+        - 1.0.0 (2024-11-21): 新規作成.
+
+    @version: 1.0.0
+    """
+
+    # メインスクリプトファイルを取得
+    def __get_main_script_file():
+        for frame in inspect.stack():
+            # フレームのグローバル変数にアクセスして __name__ を確認
+            if frame.frame.f_globals.get("__name__") == "__main__":
+                return frame.frame.f_globals.get("__file__")
+        return None
+
+    main_script_file = __get_main_script_file()
+
+    if main_script_file:
+        # exeファイルで実行している場合はexeファイルを配置しているディレクトリを取得
+        if is_executable():
+            executable_path = Path(sys.executable)
+            return executable_path.parent.resolve()
+        else:
+            # 通常のスクリプト実行時
+            return Path(main_script_file).parent.resolve()
+    else:
+        raise Exception("メイン実行しているスクリプト以外は使えない")
