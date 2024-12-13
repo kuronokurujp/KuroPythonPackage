@@ -166,7 +166,7 @@ media
 .python-version
 
 # リポジトリ固有設定
-tests/data/*
+tests/*
 .vscode/*
 shell/*
 
