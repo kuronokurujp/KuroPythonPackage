@@ -23,3 +23,8 @@
     git submodule add https://github.com/kuronokurujp/kuro_p_pak.git
     ```
 
+## 機能一覧
+- loader
+    - file.py
+        - IniFile
+            - Iniファイルを読み込み, Iniファイルのパラメーターにアクセス
